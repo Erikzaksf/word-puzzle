@@ -1,17 +1,32 @@
 $(document).ready(function () {
+  var originalSentence = "";
+  var puzzleSentence = "";
+
   $('#sentence').submit(function (event) {
-    var originalSentence = $('#original-sentence').val();
+    event.preventDefault();
+    originalSentence = $('#original-sentence').val();
     var sentenceArray = originalSentence.split("");
     var vowels = ['a', 'e', 'i', 'o', 'u'];
-    var puzzleSentence = [];
+    var puzzleSentenceArray = [];
     for (var i = 0; i < sentenceArray.length; i++) {
       var char = sentenceArray[i];
       if (vowels.includes(char)) {
         char = "-";
       }
-      puzzleSentence.push(char);
+      puzzleSentenceArray.push(char);
     }
-    var result = puzzleSentence.join('');
-    alert(result);
+    puzzleSentence = puzzleSentenceArray.join('');
+    $("#sentence").hide();
+    $(".results").append("<p>" + puzzleSentence + "</p>");
+  });
+
+  $("#sentence-guess").submit(function(event) {
+    event.preventDefault();
+    var userGuess = $("#user-guess").val();
+    if (userGuess === originalSentence) {
+      alert("Correct!");
+    } else {
+      alert("Please Try Again.");
+    }
   });
 });
